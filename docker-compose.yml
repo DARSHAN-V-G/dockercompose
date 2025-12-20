@@ -6,7 +6,7 @@ services:
     container_name: tempo
     command: ["-config.file=/etc/tempo.yaml"]
     volumes:
-      - ./tempo/tempo.yaml:/etc/tempo.yaml
+      - ./tempo.yaml:/etc/tempo.yaml
       - tempo-data:/var/tempo
     ports:
       - "3200:3200"   # Tempo UI / API
