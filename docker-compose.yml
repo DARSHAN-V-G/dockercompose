@@ -1,20 +1,17 @@
-version: "3.9"
-
 services:
   tempo:
     image: grafana/tempo:2.6.1
     container_name: tempo
     restart: unless-stopped
+    user: root
     ports:
-      - "3200:3200"   # Tempo HTTP / query
-      - "4317:4317"   # OTLP gRPC
-      - "4318:4318"   # OTLP HTTP
-    command: ["/tempo", "-config.file=/etc/tempo.yaml"]
+      - "3200:3200"     # Tempo HTTP / query
+      - "4317:4317"     # OTLP gRPC
+      - "4318:4318"     # OTLP HTTP
     volumes:
       - ./tempo.yaml:/etc/tempo.yaml:ro
-      - tempo-traces:/tmp/tempo/traces
-      - tempo-wal:/tmp/tempo/wal
-# Volumes for Tempo storage
+      - tempo-data:/var/tempo
+    command: ["/tempo", "-config.file=/etc/tempo.yaml"]
+
 volumes:
-  tempo-traces:
-  tempo-wal:
+  tempo-data:
