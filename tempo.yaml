@@ -14,9 +14,9 @@ storage:
   trace:
     backend: local
     local:
-      path: /data/tempo/traces
+      path: /tmp/tempo/traces
     wal:
-      path: /data/tempo/wal
+      path: /tmp/tempo/wal
 
 compactor:
   compaction:
