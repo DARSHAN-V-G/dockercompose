@@ -12,5 +12,9 @@ services:
     command: ["/tempo", "-config.file=/etc/tempo.yaml"]
     volumes:
       - ./tempo.yaml:/etc/tempo.yaml:ro
-      - ./tempo-data/traces:/tmp/tempo/traces
-      - ./tempo-data/wal:/tmp/tempo/wal
+      - tempo-traces:/tmp/tempo/traces
+      - tempo-wal:/tmp/tempo/wal
+# Volumes for Tempo storage
+volumes:
+  tempo-traces:
+  tempo-wal:
