@@ -1,11 +1,11 @@
 services:
   minio:
-    image: quay.io/minio/minio:latest
+    image: quay.io/minio/minio:RELEASE.2023-10-16T04-13-43Z
     container_name: minio
     restart: unless-stopped
     ports:
-      - "7030:9000"   # S3 API
-      - "6005:9001"   # Console
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Console
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin123
