@@ -1,17 +1,17 @@
 services:
-  minio:
-    image: quay.io/minio/minio:RELEASE.2023-10-16T04-13-43Z
-    container_name: minio
-    restart: unless-stopped
-    ports:
-      - "7030:9000"   # S3 API
-      - "6005:9001"   # Console
-    environment:
-      MINIO_ROOT_USER: miniopsg
-      MINIO_ROOT_PASSWORD: maruthi-suzuki
+  tempo:
+    image: grafana/tempo:latest
+    container_name: tempo
+    command: ["-config.file=/etc/tempo.yaml"]
     volumes:
-      - minio-data:/data
-    command: server /data --console-address ":9001"
+      - ./tempo.yaml:/etc/tempo.yaml
+      - tempo-data:/var/tempo
+    ports:
+      - "3200:3200"   # Tempo UI / API
+      - "4317:4317"   # OTLP gRPC
+      - "4318:4318"   # OTLP HTTP
+    restart: unless-stopped
+
 
 volumes:
-  minio-data:
+  tempo-data:
