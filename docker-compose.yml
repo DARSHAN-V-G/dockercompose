@@ -50,7 +50,7 @@ services:
     image: umamisoftware/umami:postgresql-latest
     container_name: umami
     ports:
-      - "3000:3000"
+      - "6004:3000"
     environment:
       DATABASE_URL: postgresql://umami:umami@postgres:5432/umami
       APP_SECRET: my-super-secret-key
