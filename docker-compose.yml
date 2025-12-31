@@ -14,20 +14,49 @@
 
 # volumes:
 #   prometheus-data:
+# services:
+#   minio:
+#     image: quay.io/minio/minio:RELEASE.2023-10-16T04-13-43Z
+#     container_name: minio
+#     restart: unless-stopped
+#     ports:
+#       - "7030:9000"   # S3 API
+#       - "6008:9001"   # Console
+#     environment:
+#       MINIO_ROOT_USER: miniopsg
+#       MINIO_ROOT_PASSWORD: maruthi-suzuki
+#     volumes:
+#       - minio-data:/data
+#     command: server /data --console-address ":9001"
+
+# volumes:
+#   minio-data:
+
+version: "3.8"
+
 services:
-  minio:
-    image: quay.io/minio/minio:RELEASE.2023-10-16T04-13-43Z
-    container_name: minio
-    restart: unless-stopped
-    ports:
-      - "7030:9000"   # S3 API
-      - "6008:9001"   # Console
+  postgres:
+    image: postgres:15
+    container_name: umami-postgres
     environment:
-      MINIO_ROOT_USER: miniopsg
-      MINIO_ROOT_PASSWORD: maruthi-suzuki
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: umami
     volumes:
-      - minio-data:/data
-    command: server /data --console-address ":9001"
+      - umami-db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  umami:
+    image: umamisoftware/umami:postgresql-latest
+    container_name: umami
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://umami:umami@postgres:5432/umami
+      APP_SECRET: my-super-secret-key
+    depends_on:
+      - postgres
+    restart: unless-stopped
 
 volumes:
-  minio-data:
+  umami-db:
