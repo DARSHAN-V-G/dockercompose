@@ -69,5 +69,5 @@ services:
     image: metabase/metabase:latest
     container_name: metabase
     ports:
-      - "6003:3000"
+      - "7005:3000"
     restart: unless-stopped
